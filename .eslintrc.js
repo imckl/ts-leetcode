@@ -1,0 +1,20 @@
+module.exports = {
+    root: true,
+    parser: '@typescript-eslint/parser',
+    plugins: [
+        '@typescript-eslint',
+    ],
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+    ],
+    rules: {
+        quotes: ['error', 'single', {'avoidEscape': true}],
+        strict: 'error',
+        semi: 'error',
+        eqeqeq: 'error'
+    },
+    env: {
+        node: true
+    }
+};
