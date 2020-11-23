@@ -1,70 +1,141 @@
-export function myAtoi(s: string): number {
-    const maxInt = 2 ** 31 - 1;
-    const minInt = -(2 ** 31);
+enum States {
+    start,
+    signed,
+    inNumber,
+    end
+}
 
-    let start = 0;
-    let end = s.length;
+enum Signs {
+    positive,
+    negative
+}
 
-    let i: number;
+const maxInt = 2 ** 31 - 1;
+const minInt = -(2 ** 31);
 
-    // 1. 丢弃无用的开头空格字符
-    i = 0;
-    while (s[i] === ' ') {
-        i++;
+class Automaton {
+    public sign = Signs.positive;
+    public ans = 0;
+
+    private state = States.start;
+    private table = {
+        [States.start]: [States.start, States.signed, States.inNumber, States.end],
+        [States.signed]: [States.end, States.end, States.inNumber, States.end],
+        [States.inNumber]: [States.end, States.end, States.inNumber, States.end],
+        [States.end]: [States.end, States.end, States.end, States.end]
     }
-    start += i;
-
-    const validStartChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+'];
-    const validChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-
-    if (!validStartChars.includes(s[start])) {
-        return 0;
-    }
-
-    let isNegative: boolean;
-    if (s[start] === '-') {
-        isNegative = true;
-        start++;
-    } else if (s[start] === '+') {
-        isNegative = false;
-        start++;
-    } else {
-        isNegative = false;
-    }
-
-    i = 0;
-    while (validChars.includes(s[start + i])) {
-        i++;
-    }
-    end = start + i;
-
-    const charToIntMap: { [char: string]: number } = {
+    private charToIntMap: { [char: string]: number } = {
         '0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
         '5': 5, '6': 6, '7': 7, '8': 8, '9': 9
     };
 
-    let num = 0;
-    for (let i = 0; i < end - start; i++) {
-        const char = s[end - 1 - i];
-        const int = charToIntMap[char];
-        num += 10 ** i * int;
+    private getCol(c: string): number {
+        if (c === ' ') {
+            return 0;
+        }
+
+        if (c === '+' || c === '-') {
+            return 1;
+        }
+
+        if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(c)) {
+            return 2;
+        }
+        return 3;
     }
 
-    if (isNegative) {
-        num = -num;
-    }
+    process(c: string): void {
+        this.state = this.table[this.state][this.getCol(c)];
 
-    if (num > maxInt) {
-        return maxInt;
-    } else if (num < minInt) {
-        return minInt;
-    } else {
-        return num;
+        if (this.state === States.inNumber) {
+            this.ans = this.ans * 10 + this.charToIntMap[c];
+            this.ans = this.sign === Signs.positive
+                ? Math.min(this.ans, maxInt)
+                : Math.min(this.ans, -minInt);
+        } else if (this.state === States.signed) {
+            this.sign = c === '+'
+                ? Signs.positive
+                : Signs.negative;
+        }
     }
 }
 
+export function myAtoi(s: string): number {
+    const automation = new Automaton();
+    for (const c of s) {
+        automation.process(c);
+    }
 
-// function myAtoi2(s: string): number {
+    return (automation.sign === Signs.positive ? 1 : -1) * automation.ans;
+}
+
+// export function myAtoi3(s: string): number {
+//     const maxInt = 2 ** 31 - 1;
+//     const minInt = -(2 ** 31);
+//
+//     let start = 0;
+//     let end = s.length;
+//
+//     let i: number;
+//
+//     // 1. 丢弃无用的开头空格字符
+//     i = 0;
+//     while (s[i] === ' ') {
+//         i++;
+//     }
+//     start += i;
+//
+//     const validStartChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '+'];
+//     const validChars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+//
+//     if (!validStartChars.includes(s[start])) {
+//         return 0;
+//     }
+//
+//     let isNegative: boolean;
+//     if (s[start] === '-') {
+//         isNegative = true;
+//         start++;
+//     } else if (s[start] === '+') {
+//         isNegative = false;
+//         start++;
+//     } else {
+//         isNegative = false;
+//     }
+//
+//     i = 0;
+//     while (validChars.includes(s[start + i])) {
+//         i++;
+//     }
+//     end = start + i;
+//
+//     const charToIntMap: { [char: string]: number } = {
+//         '0': 0, '1': 1, '2': 2, '3': 3, '4': 4,
+//         '5': 5, '6': 6, '7': 7, '8': 8, '9': 9
+//     };
+//
+//     let num = 0;
+//     for (let i = 0; i < end - start; i++) {
+//         const char = s[end - 1 - i];
+//         const int = charToIntMap[char];
+//         num += 10 ** i * int;
+//     }
+//
+//     if (isNegative) {
+//         num = -num;
+//     }
+//
+//     if (num > maxInt) {
+//         return maxInt;
+//     } else if (num < minInt) {
+//         return minInt;
+//     } else {
+//         return num;
+//     }
+// }
+
+
+// export function myAtoi2(s: string): number {
 //     const maxInt = 2 ** 31 - 1;
 //     const minInt = -(2 ** 31);
 //
