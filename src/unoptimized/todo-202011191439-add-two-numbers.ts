@@ -15,7 +15,7 @@ function addTwoNumbers(l1: ListNode | null, l2: ListNode | null): ListNode | nul
     let n2 = l2;
     let shouldPlusOne = false;
 
-    for(; n1 && n2; n1 = n1.next, n2 = n2.next){
+    for (; n1 && n2; n1 = n1.next, n2 = n2.next) {
         const calcVal = n1.val + n2.val;
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         shouldPlusOne = calcVal >= 10;

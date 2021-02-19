@@ -42,7 +42,7 @@ export function multiply(num1: string, num2: string): string {
     let res = resStr.reduce((sum, s) => addStr(sum, s), '');
 
     let j = 0;
-    while(res[j] === '0') {
+    while (res[j] === '0') {
         j++;
     }
 
@@ -76,7 +76,7 @@ function addStr(num1Str: string, num2Str: string): string {
 
     let i = 0;
     let step = 0;
-    while(num1Str[num1Str.length - 1 - i] && num2Str[num2Str.length - 1 - i]) {
+    while (num1Str[num1Str.length - 1 - i] && num2Str[num2Str.length - 1 - i]) {
         const num = strToDigitMap.get(num1Str[num1Str.length - 1 - i]) + strToDigitMap.get(num2Str[num2Str.length - 1 - i]);
         const digit = (num + step) % 10;
         res = digitToStrMap.get(digit) + res;
@@ -84,7 +84,7 @@ function addStr(num1Str: string, num2Str: string): string {
         i++;
     }
 
-    while(num1Str[num1Str.length - 1 - i]) {
+    while (num1Str[num1Str.length - 1 - i]) {
         const num = strToDigitMap.get(num1Str[num1Str.length - 1 - i]);
         const digit = (num + step) % 10;
         res = digitToStrMap.get(digit) + res;
@@ -92,7 +92,7 @@ function addStr(num1Str: string, num2Str: string): string {
         i++;
     }
 
-    while(num2Str[num2Str.length - 1 - i]) {
+    while (num2Str[num2Str.length - 1 - i]) {
         const num = strToDigitMap.get(num2Str[num2Str.length - 1 - i]);
         const digit = (num + step) % 10;
         res = digitToStrMap.get(digit) + res;

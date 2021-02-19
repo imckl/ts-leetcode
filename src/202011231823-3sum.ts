@@ -19,28 +19,26 @@ export function threeSum(nums: number[]): number[][] {
 
         let left = i + 1;
         let right = nums.length - 1;
-        while(left < right) {
+        while (left < right) {
             const sum = nums[i] + nums[left] + nums[right];
 
             if (sum === 0) {
                 results.push([nums[i], nums[left], nums[right]]);
 
                 // 剪枝 - 左指针数重复
-                while (left < right && nums[left] === nums[left + 1]){
+                while (left < right && nums[left] === nums[left + 1]) {
                     left++;
                 }
                 left++;
 
                 // 剪枝 - 右指针重复
-                while(left < right && nums[right] === nums[right - 1]){
+                while (left < right && nums[right] === nums[right - 1]) {
                     right--;
                 }
                 right--;
-            }
-            else if (sum > 0) {
+            } else if (sum > 0) {
                 right--;
-            }
-            else{
+            } else {
                 left++;
             }
         }

@@ -5,9 +5,9 @@ export function maxSubArray(nums: number[]): number {
 
     let max = nums[0];
     let sum = nums[0];
-    for(let i = 1; i < nums.length; i++) {
+    for (let i = 1; i < nums.length; i++) {
         sum = sum > 0 ? nums[i] + sum : nums[i];
-        if (sum > max){
+        if (sum > max) {
             max = sum;
         }
     }

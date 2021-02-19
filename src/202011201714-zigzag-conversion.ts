@@ -14,7 +14,7 @@ export function zigzagConvert(s: string, numRows: number): string {
     while (true) {
         const pos = factor * j;
 
-        if (pos >= s.length){
+        if (pos >= s.length) {
             break;
         }
 
@@ -28,7 +28,7 @@ export function zigzagConvert(s: string, numRows: number): string {
         let k = 0;
 
         // eslint-disable-next-line no-constant-condition
-        while(true) {
+        while (true) {
             const pos = k % 2 === 0 ? factor * j + i : factor * j - i;
 
             if (pos >= s.length) {
@@ -38,7 +38,7 @@ export function zigzagConvert(s: string, numRows: number): string {
             result += s[pos];
 
             k += 1;
-            if (k % 2 === 1){
+            if (k % 2 === 1) {
                 j += 1;
             }
         }
@@ -49,7 +49,7 @@ export function zigzagConvert(s: string, numRows: number): string {
     while (true) {
         const pos = factor * j + (numRows - 1);
 
-        if (pos >= s.length){
+        if (pos >= s.length) {
             break;
         }
 

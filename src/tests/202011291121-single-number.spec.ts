@@ -11,8 +11,8 @@ describe('reverse-linked-list',
     () => {
 
         const testCases: TestCase[] = [
-            {input: [2,2,1], output: 1},
-            {input: [4,1,2,1,2], output: 4}
+            {input: [2, 2, 1], output: 1},
+            {input: [4, 1, 2, 1, 2], output: 4}
         ];
 
         for (const testCase of testCases) {

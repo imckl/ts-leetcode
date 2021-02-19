@@ -11,7 +11,7 @@ describe('zigzag-conversion',
     () => {
         const maxInt = 2 ** 31 - 1;
         const minInt = -(2 ** 31);
-        
+
         const testActions: TestAction[] = [
             {input: '42', output: 42},
             {input: '   -42', output: -42},

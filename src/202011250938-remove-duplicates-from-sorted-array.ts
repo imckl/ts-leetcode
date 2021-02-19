@@ -10,7 +10,7 @@ export function removeDuplicates(nums: number[]): number {
     let prev = nums[0];
     let j = 1;
 
-    for(let i = 1; i < nums.length; i++) {
+    for (let i = 1; i < nums.length; i++) {
         if (nums[i] !== prev) {
             nums[j] = nums[i];
             prev = nums[i];
